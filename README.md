@@ -73,9 +73,9 @@ Then open `http://127.0.0.1:8791/`. To test with the production response headers
 
 ## Credits and licence
 
-- The display font is [Press Start 2P](public/assets/fonts/press-start-2p-LICENSE.txt), under the SIL Open Font License 1.1.
+- Copyright 2026 Marcus Quinn. The code and the art are released under the [MIT License](LICENSE).
 - The game sprites are drawn in code. The title pictures were made with an image model for this project.
-- Copyright 2026 Marcus Quinn. No open licence has been chosen for the code and art yet, so all rights are reserved for now.
+- The display font, [Press Start 2P](public/assets/fonts/press-start-2p-LICENSE.txt), is not ours and keeps its own licence, the SIL Open Font License 1.1.
 
 ## Built with aidevops
 
