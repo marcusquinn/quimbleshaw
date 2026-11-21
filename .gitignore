@@ -17,6 +17,7 @@ credentials.json
 
 # search targets are kept out of this public repository
 context/keywords.md
+context/keywords.md.hub
 context/keywords/
 
 # files that are added to public/ only at deploy time
