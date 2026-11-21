@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quimbleshaw — the hat-stacking meme game</title>
+<meta name="description" content="Play Quimbleshaw, a free pixel-art hat-stacking game: catch falling hats, balance a wobbling tower and knock hats off your rivals. Meet Lord Quimbleshaw.">
+<link rel="canonical" href="https://quimbleshaw.meme/">
+<meta name="theme-color" content="#160b22">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/press-start-2p-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Quimbleshaw">
+<meta property="og:title" content="Quimbleshaw — the hat-stacking meme game">
+<meta property="og:description" content="Catch falling hats, balance a wobbling tower and knock hats off your rivals. Meet Lord Quimbleshaw.">
+<meta property="og:url" content="https://quimbleshaw.meme/">
+<meta property="og:image" content="https://quimbleshaw.meme/assets/img/quimbleshaw-meme-game-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Pixel art of Lord Quimbleshaw balancing a tall tower of hats in a manor ballroom while a duchess and a baron leap to knock them off.">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+@font-face{font-family:"Press Start 2P";src:url("/assets/fonts/press-start-2p-latin-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+:root{--bg:#160b22;--surface:#24122f;--outline:#4a2b5f;--ink:#0b0612;--text:#f4e4c1;--muted:#cdb99a;--gold:#f2b632;--gold-hi:#ffd76a;--burgundy:#8b1e3f;--teal:#2ec4b6;--display:"Press Start 2P",ui-monospace,"Courier New",monospace;--body:Georgia,"Times New Roman",serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:16px}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1.125rem/1.65 var(--body)}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--gold);text-underline-offset:.2em}
+a:hover{color:var(--gold-hi)}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+::selection{background:var(--gold);color:var(--ink)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--gold);color:var(--ink);padding:10px 14px;z-index:10;font-family:var(--display);font-size:.75rem}
+.skip:focus{left:8px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding-top:20px;padding-bottom:12px}
+.brand{font-family:var(--display);font-size:.875rem;color:var(--gold);text-decoration:none;padding:14px 0;letter-spacing:.04em}
+.nav{display:flex;flex-wrap:wrap;gap:0 4px;margin:0 -10px;padding:0;list-style:none}
+.nav a{display:block;padding:15px 10px;font-family:var(--display);font-size:.75rem;color:var(--text);text-decoration:none;text-transform:uppercase}
+.nav a:hover{color:var(--gold-hi);text-decoration:underline}
+.hero{text-align:center;padding:12px 0 8px}
+.kicker{margin:0 0 12px;font-family:var(--display);font-size:.75rem;line-height:1.8;color:var(--teal);text-transform:uppercase;letter-spacing:.06em}
+h1{margin:0 0 16px;font:400 clamp(1.5rem,6.4vw,4rem)/1.2 var(--display);color:var(--gold);text-shadow:4px 4px 0 var(--burgundy),8px 8px 0 var(--ink);letter-spacing:.02em;text-transform:uppercase}
+.lede{max-width:56rem;margin:0 auto 20px;font-size:1.25rem;line-height:1.6}
+.status{display:inline-block;max-width:44rem;margin:0 auto 24px;padding:12px 16px;background:var(--surface);border:4px solid var(--teal);box-shadow:6px 6px 0 var(--ink);font-size:1rem;line-height:1.5}
+.status strong{color:var(--teal)}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:0 0 36px;padding:0;list-style:none}
+.btn{display:inline-block;padding:16px 20px;font-family:var(--display);font-size:.75rem;line-height:1.4;text-decoration:none;text-transform:uppercase;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.btn-primary{background:var(--gold);color:var(--ink)}
+.btn-primary:hover{background:var(--gold-hi);color:var(--ink)}
+.btn-ghost{background:var(--surface);color:var(--text);border-color:var(--outline)}
+.btn-ghost:hover{color:var(--gold-hi);border-color:var(--gold)}
+.btn:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+.frame{margin:0;border:4px solid var(--gold);box-shadow:0 0 0 4px var(--ink),10px 10px 0 4px var(--burgundy);background:var(--ink)}
+.frame img{width:100%}
+figcaption{padding:12px 16px;background:var(--surface);color:var(--muted);font-size:1rem;font-style:italic;line-height:1.5;text-align:center}
+section{padding:56px 0 8px}
+h2{margin:0 0 24px;font:400 clamp(1rem,2.8vw,1.5rem)/1.6 var(--display);color:var(--gold)}
+h3{margin:0 0 10px;font:400 .875rem/1.6 var(--display);color:var(--teal)}
+p{margin:0 0 18px}
+.card{background:var(--surface);border:4px solid var(--outline);box-shadow:6px 6px 0 var(--ink);padding:24px}
+.entry .word{margin:0 0 4px;font:700 2rem/1.2 var(--body);color:var(--text)}
+.entry .say{margin:0 0 18px;color:var(--muted)}
+.entry ol{margin:0 0 18px;padding-left:1.4em}
+.entry li{margin-bottom:12px}
+.pos{font-style:italic;color:var(--teal)}
+.eg{display:block;margin-top:4px;color:var(--muted);font-style:italic}
+.origin{margin:0;padding-top:16px;border-top:4px dotted var(--outline)}
+.note{color:var(--muted);font-size:1rem}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:0 0 28px;padding:0;list-style:none;counter-reset:step}
+.steps li{counter-increment:step}
+.steps h3::before{content:counter(step) ". ";color:var(--gold)}
+.steps p{margin:0;font-size:1.0625rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.two p:last-child{margin-bottom:0}
+.two .full{grid-column:1/-1}
+.lord{display:grid;grid-template-columns:minmax(220px,340px) 1fr;gap:40px;align-items:center}
+.sprite{transform-origin:50% 100%;animation:wobble 2.4s steps(6) infinite alternate}
+@keyframes wobble{from{transform:rotate(-1.2deg)}to{transform:rotate(1.2deg)}}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0 0 24px}
+.facts dt{font-family:var(--display);font-size:.75rem;line-height:2.2;color:var(--teal)}
+.facts dd{margin:0}
+.hats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0;padding:0;list-style:none}
+.hats li{background:var(--surface);border:4px solid var(--outline);padding:14px 16px;font-size:1.0625rem;line-height:1.5}
+.hats strong{display:block;color:var(--gold)}
+.hats canvas{display:block;width:64px;height:48px;margin:0 0 8px;image-rendering:pixelated}
+.specials{grid-template-columns:repeat(2,1fr)}
+.hats+h3{margin-top:32px}
+.meme{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.faq h3{margin-top:28px;font:700 1.25rem/1.4 var(--body);color:var(--text)}
+.faq h3:first-of-type{margin-top:0}
+.faq p{max-width:46rem}
+footer{margin-top:64px;padding:28px 0 40px;border-top:4px solid var(--outline);color:var(--muted);font-size:1rem}
+footer p{margin:0 0 8px}
+[hidden]{display:none!important}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+button.btn{cursor:pointer;font-family:var(--display);-webkit-appearance:none;appearance:none;border-radius:0}
+.btn-sm{padding:12px 14px;font-size:.625rem;box-shadow:4px 4px 0 var(--ink)}
+.game{width:min(100%,1058px,max(320px,calc((100vh - 150px)*1.7857)));margin:0 auto 36px}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chip{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--surface);border:4px solid var(--outline);font:400 .625rem/1.6 var(--display);text-transform:uppercase}
+.chip i{display:block;width:10px;height:10px}
+.chip small{font:italic .875rem/1 var(--body);color:var(--muted);text-transform:none}
+.chip b{min-width:2ch;font-weight:400;font-size:.875rem;color:var(--gold);text-align:right}
+.chip.lead{border-color:var(--gold)}
+.clock{margin:0;font:400 1.25rem/1.4 var(--display)}
+.clock.storm{color:#ff6b6b}
+.screen{position:relative;background:var(--ink)}
+.screen img,.screen canvas{display:block;width:100%;aspect-ratio:350/196}
+.screen img{object-fit:cover;object-position:50% 0}
+.screen canvas{image-rendering:pixelated;outline:0}
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;pointer-events:none}
+.overlay>*{pointer-events:auto}
+.big{margin:0;font:400 clamp(1.25rem,6vw,3.5rem)/1.2 var(--display);color:var(--gold);text-shadow:4px 4px 0 var(--burgundy),8px 8px 0 var(--ink);text-transform:uppercase;pointer-events:none}
+.btn-play{padding:20px 28px;font-size:1rem}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 16px;margin:20px 0 12px}
+.ctl label{font:400 .75rem/1.4 var(--display);color:var(--teal);text-transform:uppercase}
+.ctl input{width:11rem;padding:10px 12px;background:var(--surface);color:var(--text);border:4px solid var(--outline);border-radius:0;font:400 1rem/1.2 var(--body)}
+.pad{display:flex;justify-content:space-between;gap:12px;margin:16px 0 0;touch-action:none;-webkit-user-select:none;user-select:none}
+.pad div{display:flex;gap:10px}
+.pad button,.pad span{display:grid;place-items:center;width:64px;height:64px;padding:0;background:var(--surface);border:4px solid var(--outline);border-radius:0;box-shadow:4px 4px 0 var(--ink);color:var(--gold);touch-action:none;-webkit-tap-highlight-color:transparent}
+.pad .jump{width:88px}
+.pad svg{width:28px;height:28px;fill:currentColor}
+.pad button.on,.pad [data-on=left] span:first-child,.pad [data-on=right] span:last-child{background:var(--outline);color:var(--gold-hi)}
+.result{margin:24px 0 0;text-align:left}
+.result h2{margin-bottom:12px}
+.result h2:focus{outline:0}
+.roast{color:var(--muted);font-style:italic}
+.shot{display:block;width:100%;height:auto;margin:0 0 20px;border:4px solid var(--outline);background:var(--ink)}
+.btn:disabled{opacity:.5;cursor:default}
+.result table{width:100%;margin:0 0 18px;border-collapse:collapse;font-size:1rem}
+.result th,.result td{padding:8px 6px;border-bottom:4px dotted var(--outline);text-align:right}
+.result th:nth-child(2),.result td:nth-child(2){text-align:left}
+.result thead th{font:400 .625rem/1.6 var(--display);color:var(--teal);text-transform:uppercase}
+.result tr.me td{color:var(--gold)}
+.result .actions{justify-content:flex-start;margin-bottom:16px}
+.result textarea{display:block;width:100%;padding:12px;background:var(--bg);color:var(--text);border:4px solid var(--outline);border-radius:0;font:400 1rem/1.5 var(--body);resize:none}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}.hats{grid-template-columns:repeat(2,1fr)}.meme{grid-template-columns:1fr}}
+@media (max-width:640px){.result .wide{display:none}.chip{padding:4px 6px;gap:6px}.clock{font-size:1rem}}
+@media (max-width:640px){body{font-size:1.0625rem}.top{justify-content:center;text-align:center;gap:0;padding-top:12px}.nav{justify-content:center;gap:0;margin:0}.nav a{padding:15px 5px;font-size:.625rem}.hero{padding-top:12px}.lede{font-size:1.125rem}.steps,.two,.hats{grid-template-columns:1fr}.lord{grid-template-columns:1fr;gap:16px}.lord .sprite{max-width:260px;margin:0 auto}.facts{grid-template-columns:1fr;gap:0}.facts dd{margin-bottom:10px}section{padding-top:44px}.card{padding:18px}h1{text-shadow:3px 3px 0 var(--burgundy),6px 6px 0 var(--ink)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sprite{animation:none}.btn:active{transform:none}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://quimbleshaw.meme/#website",
+      "url": "https://quimbleshaw.meme/",
+      "name": "Quimbleshaw",
+      "alternateName": "quimbleshaw.meme",
+      "description": "Quimbleshaw is a pixel-art hat-stacking meme game starring Lord Quimbleshaw.",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://quimbleshaw.meme/#webpage",
+      "url": "https://quimbleshaw.meme/",
+      "name": "Quimbleshaw — the hat-stacking meme game",
+      "isPartOf": { "@id": "https://quimbleshaw.meme/#website" },
+      "about": { "@id": "https://quimbleshaw.meme/#term" },
+      "mainEntity": { "@id": "https://quimbleshaw.meme/#game" },
+      "primaryImageOfPage": { "@id": "https://quimbleshaw.meme/#primaryimage" },
+      "datePublished": "2026-11-20",
+      "dateModified": "2026-11-21",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://quimbleshaw.meme/#primaryimage",
+      "url": "https://quimbleshaw.meme/assets/img/quimbleshaw-ballroom-hat-fight.webp",
+      "width": 1536,
+      "height": 1024,
+      "caption": "Lord Quimbleshaw balancing a tower of nine hats in a manor ballroom while a duchess and a baron leap to knock them off."
+    },
+    {
+      "@type": "VideoGame",
+      "@id": "https://quimbleshaw.meme/#game",
+      "name": "Quimbleshaw",
+      "url": "https://quimbleshaw.meme/",
+      "description": "A free pixel-art hat-stacking game for the web browser. Catch falling hats, balance them in a tower and knock hats off your rivals. The most hats after three minutes wins.",
+      "image": { "@id": "https://quimbleshaw.meme/#primaryimage" },
+      "genre": ["Platform game", "Arcade game"],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "inLanguage": "en",
+      "datePublished": "2026-11-20",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://quimbleshaw.meme/#term",
+      "name": "quimbleshaw",
+      "url": "https://quimbleshaw.meme/#meaning",
+      "description": "An invented word. As a noun: Lord Quimbleshaw, a pompous fictional English lord, and the hat-stacking game named after him. As a verb: to knock the hats off someone's tower; to be quimbleshawed is to lose a tower you were visibly proud of."
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://quimbleshaw.meme/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Quimbleshaw?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Quimbleshaw is a pixel-art hat-stacking game and the name of its main character, Lord Quimbleshaw. Players catch falling hats, balance them in a tower and knock hats off each other. The tallest tower at the bell wins." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is quimbleshaw a real word?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Not before 20 November 2026. Quimbleshaw was invented as the keyword for the Advise SEO contest, in which entrants have 60 days to rank a page for a word that did not previously exist. This site is one entry, and it answers the question by making the word mean something." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you pronounce quimbleshaw?",
+          "acceptedAnswer": { "@type": "Answer", "text": "KWIM-bul-shaw, with the stress on the first syllable. Three syllables, said as if you own the building." }
+        },
+        {
+          "@type": "Question",
+          "name": "What does quimbleshawed mean?",
+          "acceptedAnswer": { "@type": "Answer", "text": "To be quimbleshawed is to have your hat tower knocked down just when it was at its tallest. More loosely, it means to be publicly undone by your own pride." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Quimbleshaw game free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Quimbleshaw runs free in a web browser, with no download and no account." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you play Quimbleshaw?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Press Play at the top of quimbleshaw.meme. Move with the arrow keys or A and D, jump with up, W or space, and drop through a ledge with down or S. Walk into hats to wear them, keep the tower steady, and land on a rival's tower to knock their hats off. A round lasts three minutes." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Quimbleshaw multiplayer?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Not yet. Today you play against three house bots, clearly labelled as bots. Rounds against other people, with handles and a leaderboard, are planned." }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the special hats in Quimbleshaw?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Four hats give a power for a few seconds instead of joining your tower. The magnet hat pulls nearby hats towards you. The iron helm stops your tower being shaken or knocked, but slows you down. The propeller cap makes you jump far higher. The lit keg goes off after four seconds and blows hats off everyone near it, you included." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do ranks work in Quimbleshaw?",
+          "acceptedAnswer": { "@type": "Answer", "text": "There are seven ranks: Commoner, Squire, Knight, Baron, Earl, Duke and Quimbleshaw. First place in a round wins two feathers and second place wins one. Third place loses one and last place loses two. Five feathers lift you a rank, and the house bots play harder at each one. Your rank is kept in your browser." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="wrap top">
+  <a class="brand" href="/" aria-label="Quimbleshaw home">QUIMBLESHAW</a>
+  <nav aria-label="Sections">
+    <ul class="nav">
+      <li><a href="#meaning">Meaning</a></li>
+      <li><a href="#game">Game</a></li>
+      <li><a href="#lord">The Lord</a></li>
+      <li><a href="#memes">Memes</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main" class="wrap">
+  <div class="hero">
+    <p class="kicker">A pixel-art game of hats, pride and gravity</p>
+    <h1>Quimbleshaw</h1>
+    <p class="lede"><strong>Quimbleshaw</strong> is a hat-stacking meme game. Catch the hats raining down on the manor ballroom, balance them in an ever taller tower, and knock them off everyone else before the bell. The tallest tower wins. The loudest fall becomes a meme.</p>
+    <div class="game" id="play">
+      <div class="hud" id="hud" hidden>
+        <ol class="chips" id="chips" aria-label="Hats held by each player"></ol>
+        <p class="clock"><span class="vh">Time left: </span><span id="clock">3:00</span></p>
+      </div>
+      <figure class="frame">
+        <div class="screen">
+          <img id="poster" src="/assets/img/quimbleshaw-ballroom-hat-fight-768.webp" srcset="/assets/img/quimbleshaw-ballroom-hat-fight-768.webp 768w, /assets/img/quimbleshaw-ballroom-hat-fight.webp 1536w" sizes="(min-width: 1100px) 1050px, calc(100vw - 48px)" width="1536" height="1024" fetchpriority="high" decoding="async" alt="Pixel art of a manor ballroom at night. A portly lord with a ginger moustache and monocle balances a leaning tower of nine hats, topped by a teapot, while a duchess in teal and a baron in green leap from stone platforms to knock them off. More hats fall from the ceiling.">
+          <canvas id="arena" width="350" height="196" tabindex="-1" role="img" aria-label="The Quimbleshaw ballroom: four players catch falling hats on the floor and on five stone ledges, under a low chandelier." hidden></canvas>
+          <div class="overlay">
+            <p class="big" id="msg" aria-live="polite" hidden></p>
+            <button type="button" class="btn btn-primary btn-play" id="start" hidden>Play</button>
+          </div>
+        </div>
+        <figcaption id="caption">Lord Quimbleshaw, nine hats up, moments before being quimbleshawed by the Duchess and the Baron.</figcaption>
+      </figure>
+      <div class="pad" id="pad" hidden>
+        <div data-pad="move" role="group" aria-label="Move left or right">
+          <span><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M6 0v8L1 4z"/></svg></span>
+          <span><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M2 0v8l5-4z"/></svg></span>
+        </div>
+        <div>
+          <button type="button" data-key="down" aria-label="Drop through a ledge"><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M0 2h8L4 7z"/></svg></button>
+          <button type="button" class="jump" data-key="jump" aria-label="Jump"><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M0 6h8L4 1z"/></svg></button>
+        </div>
+      </div>
+      <div class="card result" id="result" hidden>
+        <h2 id="result-h" tabindex="-1">Round over</h2>
+        <p class="roast" id="result-line"></p>
+        <canvas class="shot" id="card" width="1200" height="630" role="img" aria-label="Result picture"></canvas>
+        <ul class="actions">
+          <li><button type="button" class="btn btn-primary" id="again">Play again</button></li>
+          <li><button type="button" class="btn btn-ghost" id="save" disabled>Save picture</button></li>
+          <li><button type="button" class="btn btn-ghost" id="copy" disabled hidden>Copy picture</button></li>
+          <li><button type="button" class="btn btn-ghost" id="share">Share result</button></li>
+        </ul>
+        <p class="note" id="share-status" role="status"></p>
+        <table>
+          <thead><tr><th scope="col">Place</th><th scope="col">Player</th><th scope="col">Hats</th><th scope="col" class="wide">Tallest</th><th scope="col">Knocked off</th><th scope="col" class="wide">Dropped</th></tr></thead>
+          <tbody id="result-rows"></tbody>
+        </table>
+        <p class="note" id="result-rank"></p>
+        <p class="note" id="result-best"></p>
+        <label class="vh" for="share-text">Your result as text</label>
+        <textarea id="share-text" rows="5" readonly></textarea>
+      </div>
+      <div class="ctl">
+        <label for="name">Your name</label>
+        <input id="name" type="text" maxlength="14" autocomplete="nickname" spellcheck="false" placeholder="Optional">
+        <button type="button" class="btn btn-ghost btn-sm" id="sound" aria-pressed="true">Sound: on</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="pause" hidden>Pause</button>
+      </div>
+      <p class="note" id="daily">Each day has one ballroom: the same hats fall in the same places for every player.</p>
+      <p class="note" id="rank">Your rank: Commoner. Feathers: 0 of 5. Beat the house to win feathers. Five lift you a rank, and the house plays harder at each one.</p>
+      <noscript><p class="note">The game needs JavaScript. Everything else on this page works without it.</p></noscript>
+    </div>
+    <p class="status"><strong>Now playable:</strong> you against the house. Lord Quimbleshaw, the Duchess and the Baron are bots, and labelled as bots. Rounds against other people are still being built.</p>
+    <ul class="actions">
+      <li><a class="btn btn-ghost" href="#game">How to play</a></li>
+      <li><a class="btn btn-ghost" href="#meaning">What the word means</a></li>
+    </ul>
+  </div>
+
+  <section id="meaning" aria-labelledby="meaning-h">
+    <h2 id="meaning-h">What does quimbleshaw mean?</h2>
+    <div class="card entry">
+      <p class="word">quimbleshaw</p>
+      <p class="say">/ˈkwɪm.bəl.ʃɔː/ &middot; KWIM-bul-shaw</p>
+      <ol>
+        <li><span class="pos">noun.</span> Lord Quimbleshaw: a pompous, portly English lord with a magnificent moustache, who believes the height of a hat tower is the true measure of its owner.</li>
+        <li><span class="pos">noun.</span> The hat-stacking game named after him, played in his ballroom and largely at his expense.</li>
+        <li><span class="pos">verb.</span> To quimbleshaw someone is to knock the hats off their tower. To be quimbleshawed is to lose a tower you were visibly proud of, usually seconds before the bell. <span class="eg">&ldquo;I was nine hats up and the Duchess quimbleshawed me.&rdquo;</span></li>
+      </ol>
+      <p class="origin"><strong>Origin.</strong> Quimbleshaw is an invented word. It had no meaning and no search results until 20 November 2026, when it was announced as the keyword for the <a href="https://advise.so/seo-contest-page/">Advise SEO contest</a>. This site gave it a face, a moustache and a definition.</p>
+    </div>
+  </section>
+
+  <section id="game" aria-labelledby="game-h">
+    <h2 id="game-h">How a round of Quimbleshaw plays</h2>
+    <p>Quimbleshaw is a 2D platform arena in the spirit of the 16-bit era: one screen, simple controls, and a great many ways to embarrass yourself. The first build is <a href="#play">playable at the top of this page</a>: you against three house bots. Details will change as it is play-tested.</p>
+    <ol class="steps">
+      <li class="card"><h3>Catch</h3><p>Hats fall from the ceiling all round long. Walk into one and it lands on your head. Top hats, bowlers, fezzes, crowns, the occasional teapot.</p></li>
+      <li class="card"><h3>Balance</h3><p>Every hat makes your tower taller and wobblier. Turn too sharply, land too hard or run under a low chandelier and your hats spill across the floor for anyone to grab.</p></li>
+      <li class="card"><h3>Steal</h3><p>Jump on a rival&rsquo;s tower to knock their top hats loose, then catch them before they do. A tall tower is a big target. That is the whole trouble with being in the lead.</p></li>
+      <li class="card"><h3>The bell</h3><p>A round lasts three minutes. When the bell rings, the hats are counted and the most hats wins. Hats on the floor count for nothing.</p></li>
+    </ol>
+    <div class="two">
+      <div class="card"><h3>Controls</h3><p>Move with the arrow keys or A and D. Jump with up, W or space. Press down or S to drop through a ledge. P pauses. On a phone or tablet, buttons appear under the picture.</p></div>
+      <div class="card"><h3>One ballroom a day</h3><p>Each day has one numbered ballroom. The same hats fall in the same places for every player, so two scores from the same day and the same rank are a fair comparison. Play it as often as you like; your best is kept on your device.</p></div>
+      <div class="card"><h3>Skill, not grind</h3><p>A score is one three-minute round, never a total. Your rank goes up when you beat the house and down when you do not, so playing for longer does not raise it. Rankings against other people are planned on the same principle.</p></div>
+      <div class="card"><h3>A full ballroom</h3><p>A round never waits for players. Empty places are taken by the house: bot aristocrats, clearly labelled as bots, who are bad losers and worse winners.</p></div>
+      <div class="card full" id="ranks"><h3>Ranks and feathers</h3><p>First place wins two feathers and second place wins one. Third place loses one and last place loses two, as does finishing with no hats at all. Five feathers lift you a rank, and the house plays harder at each one. Lose a feather you do not have and you go down a rank.</p><p class="note">The ranks, from the bottom: Commoner, Squire, Knight, Baron, Earl, Duke and, at the very top, Quimbleshaw. Your rank is kept on your device.</p></div>
+    </div>
+  </section>
+
+  <section id="lord" aria-labelledby="lord-h">
+    <h2 id="lord-h">Meet Lord Quimbleshaw</h2>
+    <div class="lord">
+      <img class="sprite" src="/assets/img/lord-quimbleshaw-hat-tower.webp" width="640" height="1000" loading="lazy" decoding="async" alt="Pixel art of Lord Quimbleshaw: a round man in a plum tailcoat and mustard waistcoat, arms out for balance, with a wobbling tower of seven hats on his head.">
+      <div>
+        <p>Lord Quimbleshaw is the fictional master of Quimbleshaw Manor, a man of immense dignity and very little balance. He holds that a gentleman is exactly as important as his hat tower is tall, and he has never once reached the bell with his tower intact.</p>
+        <dl class="facts">
+          <dt>Residence</dt><dd>Quimbleshaw Manor, mostly the ballroom floor.</dd>
+          <dt>Known for</dt><dd>The moustache, the monocle, the fall.</dd>
+          <dt>Weakness</dt><dd>Low chandeliers, sharp turns and the Duchess.</dd>
+          <dt>Motto</dt><dd>&ldquo;Unhand my hats.&rdquo;</dd>
+        </dl>
+        <h3>The rivals</h3>
+        <p><strong>The Dowager Duchess</strong> wears teal, moves faster than she looks and has no mercy at all. <strong>The Baron</strong> wears green and carries a cane, a sneer and a cocked hat he did not pay for. Both would very much like the crown from the middle of his tower.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hats" aria-labelledby="hats-h">
+    <h2 id="hats-h">The hats</h2>
+    <ul class="hats">
+      <li><strong>Top hat</strong> The foundation of any respectable tower.</li>
+      <li><strong>Bowler</strong> Sensible and round. Rolls a long way when dropped.</li>
+      <li><strong>Deerstalker</strong> For those who suspect they are about to be robbed.</li>
+      <li><strong>Fez</strong> Small, red and surprisingly proud.</li>
+      <li><strong>Jester cap</strong> The bells tell everyone exactly where you are.</li>
+      <li><strong>Crown</strong> Heavy is the head, and so on.</li>
+      <li><strong>Sombrero</strong> Wide enough to hide the next three hats.</li>
+      <li><strong>Party hat</strong> Pointed. Nothing balances on a point.</li>
+      <li><strong>Teapot</strong> Not a hat. Counts anyway.</li>
+    </ul>
+    <h3 id="special-hats">Special hats</h3>
+    <p>About one falling hat in fourteen is special, marked by a spark that circles it. A special hat does not join your tower or count at the bell. It gives you a power for a few seconds, and every one of them can go wrong.</p>
+    <ul class="hats specials">
+      <li><canvas data-hat="9" width="16" height="12" aria-hidden="true"></canvas><strong>Magnet hat</strong> For eight seconds, hats near you slide your way. It does not choose: a lit keg comes as readily as a crown.</li>
+      <li><canvas data-hat="10" width="16" height="12" aria-hidden="true"></canvas><strong>Iron helm</strong> For eight seconds nothing can shake or knock your tower. You also run like someone wearing an iron helm.</li>
+      <li><canvas data-hat="11" width="16" height="12" aria-hidden="true"></canvas><strong>Propeller cap</strong> For eight seconds you jump far higher. Hold jump to float down. Let go at the top and you land hard enough to lose hats.</li>
+      <li><canvas data-hat="12" width="16" height="12" aria-hidden="true"></canvas><strong>Lit keg</strong> It goes off four seconds after you catch it. Everyone close to you on your level loses half a tower, and you lose a quarter of yours. Best caught with nothing to lose.</li>
+    </ul>
+  </section>
+
+  <section id="memes" aria-labelledby="memes-h">
+    <h2 id="memes-h">Quimbleshaw memes</h2>
+    <div class="meme">
+      <div>
+        <p>Every round ends with a picture: all four players, their towers, the final count and one line of commentary from the house. That picture is the meme.</p>
+        <p>Save it, copy it or share it from the results card. Embedding it on your own site and changing the caption to make it worse are planned, along with a free meme maker with original Quimbleshaw reaction faces.</p>
+        <p class="note">This was the first Quimbleshaw meme. Take it.</p>
+      </div>
+      <figure class="frame">
+        <img src="/assets/img/quimbleshaw-meme-game-og.jpg" width="1200" height="630" loading="lazy" decoding="async" alt="Meme-style picture of Lord Quimbleshaw under a tower of hats with the caption: Quimbleshaw, the hat-stacking meme game.">
+      </figure>
+    </div>
+  </section>
+
+  <section id="faq" class="faq" aria-labelledby="faq-h">
+    <h2 id="faq-h">Quimbleshaw questions</h2>
+    <h3>What is Quimbleshaw?</h3>
+    <p>Quimbleshaw is a pixel-art hat-stacking game and the name of its main character, Lord Quimbleshaw. Players catch falling hats, balance them in a tower and knock hats off each other. The tallest tower at the bell wins.</p>
+    <h3>Is quimbleshaw a real word?</h3>
+    <p>Not before 20 November 2026. Quimbleshaw was invented as the keyword for the Advise SEO contest, in which entrants have 60 days to rank a page for a word that did not previously exist. This site is one entry, and it answers the question by making the word mean something.</p>
+    <h3>How do you pronounce quimbleshaw?</h3>
+    <p>KWIM-bul-shaw, with the stress on the first syllable. Three syllables, said as if you own the building.</p>
+    <h3>What does &ldquo;quimbleshawed&rdquo; mean?</h3>
+    <p>To be quimbleshawed is to have your hat tower knocked down just when it was at its tallest. More loosely, it means to be publicly undone by your own pride.</p>
+    <h3>Is the Quimbleshaw game free?</h3>
+    <p>Yes. Quimbleshaw runs free in a web browser, with no download and no account.</p>
+    <h3>How do you play Quimbleshaw?</h3>
+    <p>Press Play at the top of quimbleshaw.meme. Move with the arrow keys or A and D, jump with up, W or space, and drop through a ledge with down or S. Walk into hats to wear them, keep the tower steady, and land on a rival&rsquo;s tower to knock their hats off. A round lasts three minutes.</p>
+    <h3>Is Quimbleshaw multiplayer?</h3>
+    <p>Not yet. Today you play against three house bots, clearly labelled as bots. Rounds against other people, with handles and a leaderboard, are planned.</p>
+    <h3>What are the special hats in Quimbleshaw?</h3>
+    <p>Four hats give a power for a few seconds instead of joining your tower. The magnet hat pulls nearby hats towards you. The iron helm stops your tower being shaken or knocked, but slows you down. The propeller cap makes you jump far higher. The lit keg goes off after four seconds and blows hats off everyone near it, you included.</p>
+    <h3>How do ranks work in Quimbleshaw?</h3>
+    <p>There are seven ranks: Commoner, Squire, Knight, Baron, Earl, Duke and Quimbleshaw. First place in a round wins two feathers and second place wins one. Third place loses one and last place loses two. Five feathers lift you a rank, and the house bots play harder at each one. Your rank is kept in your browser.</p>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>&copy; 2026 quimbleshaw.meme. Quimbleshaw is an entry in the 2026 Advise SEO contest.</p>
+  <p>Original pixel art made with AI image tools. Headings set in Press Start 2P (<a href="/assets/fonts/press-start-2p-LICENSE.txt">SIL Open Font License</a>).</p>
+</footer>
+<script type="module" src="/js/game.js"></script>
+</body>
+</html>

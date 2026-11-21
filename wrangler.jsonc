@@ -1,0 +1,17 @@
+{
+  // Static site on Cloudflare Workers static assets.
+  // Credentials come from the environment and are never stored in this file.
+  // The www host is 301-redirected by a zone rule.
+  "name": "quimbleshaw",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "./public",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "quimbleshaw.meme", "custom_domain": true }
+  ]
+}
