@@ -245,6 +245,9 @@ strategy, account details and operator scripts are kept outside it (see
 - 2026-11-21: The page footer links to this repository, and the `VideoGame`
   item in the structured data names it in `sameAs`. The link text describes
   where the link goes.
+- 2026-11-21: MIT License for the code and the art, chosen by the owner. This
+  replaces "no open licence yet" above. The display font keeps its own
+  licence (SIL Open Font License 1.1).
 
 #### Surprises & Discoveries
 
