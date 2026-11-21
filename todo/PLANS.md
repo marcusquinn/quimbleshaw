@@ -122,8 +122,8 @@ strategy, account details and operator scripts are kept outside it (see
 | Round loop, input, results, saved scores | `public/js/game.js` | 1-699 | shell, HUD, touch pad, share text, `localStorage` |
 | Rank ladder | `public/js/game.js` | 11-24, 169-213 | `RANKS`, `RANK_SKILL`, `PLACE_FEATHERS`, `houseFor`, `settle`, feathers, promotion, demotion |
 | Result picture | `public/js/card.js`, `public/js/game.js` | 1-197, 399-540 | `drawCard`, `makeCard`, share image, save, copy, verdict |
-| Game markup and styles | `public/index.html` | 99-144, 279-333 | `#play`, stage, scoreboard, results card, `#card`, `#rank` |
-| Rules and hat lists on the page | `public/index.html` | 354-411 | `#game`, `#ranks`, `#hats`, `#special-hats` |
+| Game markup and styles | `public/index.html` | 99-144, 280-334 | `#play`, stage, scoreboard, results card, `#card`, `#rank` |
+| Rules and hat lists on the page | `public/index.html` | 355-412 | `#game`, `#ranks`, `#hats`, `#special-hats` |
 | Bot-only rounds | `checks/sim-check.mjs` | 1-73 | balance, rank difficulty, repeatable round, feathers a round |
 | Browser check | `checks/powers-check.mjs` | 1-363 | Playwright, special hats, ladder, promotion, phone, result picture |
 
@@ -242,6 +242,9 @@ strategy, account details and operator scripts are kept outside it (see
   details and operator scripts are not committed here.
 - 2026-11-21: No open licence yet. The code and art are published to be read;
   all rights are reserved until the owner picks a licence.
+- 2026-11-21: The page footer links to this repository, and the `VideoGame`
+  item in the structured data names it in `sameAs`. The link text describes
+  where the link goes.
 
 #### Surprises & Discoveries
 
