@@ -1,0 +1,29 @@
+# local tool state
+.agents/loop-state/
+.agents/tmp/
+.agents/memory/
+.agents/commands
+.windsurf/
+.aidevops.json
+
+# secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+
+# search targets are kept out of this public repository
+context/keywords.md
+context/keywords/
+
+# files that are added to public/ only at deploy time
+public/*.txt
+!public/robots.txt
+
+# build and deploy artifacts
+node_modules/
+.wrangler/
+.dev.vars
